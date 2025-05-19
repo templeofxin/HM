@@ -5,52 +5,102 @@
   <title>Hashi Media Creator Database</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* --- Neomorphism styling inspired by HashiMedia brand --- */
     :root {
-      --bg:#0e0e0f;
-      --fg:#f8f8f8;
+      /* light mode colours */
+      --bg: #f2f4f8;               /* page background */
+      --surface: #e7e9ee;          /* card / surface */
+      --accent: #ff7d4e;           /* orange‑coral used on hashimedia.com hero */
+      --text: #1d1d1f;
+      --shadow-light: rgba(255,255,255,.7);
+      --shadow-dark: rgba(0,0,0,.12);
     }
+
+    * { box-sizing: border-box; }
     body {
-      margin:0;
-      font-family: system-ui, Arial, sans-serif;
+      margin: 0;
+      font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
       background: var(--bg);
-      color: var(--fg);
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
+
     header {
-      padding:1rem 2rem;
-      background:#1a1b1f;
-      border-bottom:1px solid #222;
+      max-width: 960px;
+      margin: 2rem auto 1rem;
+      padding: 1.5rem 2rem;
+      border-radius: 24px;
+      background: var(--surface);
+      /* neomorphic outer shadow */
+      box-shadow: 8px 8px 16px var(--shadow-dark),
+                  -8px -8px 16px var(--shadow-light);
+      text-align: center;
     }
+
     header h1 {
-      margin:0;
-      font-size:1.25rem;
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: var(--accent);
     }
+
     header p {
-      margin:.25rem 0 0;
-      font-size:.875rem;
-      color:#bbb;
+      margin: 0.5rem 0 0;
+      font-size: 0.95rem;
+      color: #5b5b5d;
     }
+
     main {
-      flex:1;
-      display:flex;
-      flex-direction:column;
+      flex: 1;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 0 1rem 2.5rem;
     }
+
+    .frame-wrap {
+      flex: 1;
+      max-width: 1200px;
+      height: 80vh;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--surface);
+      /* neomorphic inner shadow */
+      box-shadow: inset 6px 6px 12px var(--shadow-dark),
+                  inset -6px -6px 12px var(--shadow-light);
+    }
+
     iframe {
-      width:100%;
-      flex:1;
-      border:0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* --- dark mode --- */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #121216;
+        --surface: #1c1d22;
+        --text: #f5f5f5;
+        --shadow-light: rgba(255,255,255,.04);
+        --shadow-dark: rgba(0,0,0,.5);
+      }
+      header p { color: #b3b3b7; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Creator Database</h1>
-    <p>Use the “Filter” inside the table to narrow by Category, Tier, or Channel.</p>
+    <p>Use the built‑in Notion filters to narrow by Category, Tier, or Channel</p>
   </header>
+
   <main>
-    <iframe src="https://hashimedia.notion.site/ebd/1f8383e9a54080dba389f17052c61c35?v=1f8383e9a54080158658000c911440df&embed" allow="fullscreen" loading="lazy"></iframe>
+    <div class="frame-wrap">
+      <iframe src="https://hashimedia.notion.site/ebd/1f8383e9a54080dba389f17052c61c35?v=1f8383e9a54080158658000c911440df&embed" loading="lazy" allowfullscreen></iframe>
+    </div>
   </main>
 </body>
 </html>
