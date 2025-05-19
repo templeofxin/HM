@@ -72,12 +72,28 @@
   <div class="filters">
     <select id="tierFilter" onchange="filterTable()">
       <option value="">All Tiers</option>
+      <option>Low tier (<100000)</option>
+      <option>Grassroots (< 10000)</option>
+      <option>Mid tier (<500000)</option>
+      <option>Top tier (500000+)</option>
     </select>
     <select id="categoryFilter" onchange="filterTable()">
       <option value="">All Categories</option>
+      <option>コンピューターゲーム</option>
+      <option>スマホゲーム</option>
+      <option>家庭用ゲーム（PlayStation、Switchなど）</option>
+      <option>配信（カテゴリー問わず）</option>
+      <option>ライフスタイル</option>
+      <option>旅行</option>
+      <option>ガジェットレビュー</option>
+      <option>在日外国人</option>
+      <option>Study</option>
+      <option>ファッション</option>
+      <option>メイク</option>
     </select>
     <select id="channelFilter" onchange="filterTable()">
       <option value="">All Channels</option>
+      <option>YouTube</option>
     </select>
   </div>
   <table id="creatorTable">
@@ -90,10 +106,8 @@
         <th>Followers</th>
       </tr>
     </thead>
-    <tbody>
-    </tbody>
+    <tbody></tbody>
   </table>
-
   <script>
     const data = [
       { name: "闇の帝王、不敗の猛者", category: "コンピューターゲーム, スマホゲーム, 家庭用ゲーム（PlayStation、Switchなど）", tier: "", channel: "YouTube", url: "https://www.youtube.com/@%E9%97%87%E3%81%AE%E5...", followers: "" },
@@ -102,28 +116,6 @@
       { name: "amano satoshi", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@amanosatoshi/featured", followers: "31,100" },
       { name: "RUYLOG", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@RUYLOG", followers: "42,600" },
     ];
-
-    function populateFilters() {
-      const tierSet = new Set();
-      const categorySet = new Set();
-      const channelSet = new Set();
-
-      data.forEach(item => {
-        if (item.tier) tierSet.add(item.tier);
-        if (item.category) categorySet.add(item.category);
-        if (item.channel) channelSet.add(item.channel);
-      });
-
-      for (const val of tierSet) addOption("tierFilter", val);
-      for (const val of categorySet) addOption("categoryFilter", val);
-      for (const val of channelSet) addOption("channelFilter", val);
-    }
-
-    function addOption(id, text) {
-      const opt = document.createElement("option");
-      opt.value = opt.textContent = text;
-      document.getElementById(id).appendChild(opt);
-    }
 
     function renderTable() {
       const tbody = document.querySelector("#creatorTable tbody");
@@ -150,11 +142,15 @@
       tbody.innerHTML = "";
 
       data.forEach(item => {
+        const categories = item.category.split(",").map(c => c.trim());
+        const categoryMatch = !category || categories.includes(category);
+
         if ((tier && item.tier !== tier) ||
-            (category && item.category !== category) ||
+            !categoryMatch ||
             (channel && item.channel !== channel)) {
           return;
         }
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td><a href="${item.url}" target="_blank">${item.name}</a></td>
@@ -167,7 +163,6 @@
       });
     }
 
-    populateFilters();
     renderTable();
   </script>
 </body>
