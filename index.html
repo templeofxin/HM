@@ -2,105 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Hashi Media Creator Database</title>
+  <title>Creator Database</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* --- Neomorphism styling inspired by HashiMedia brand --- */
     :root {
-      /* light mode colours */
-      --bg: #f2f4f8;               /* page background */
-      --surface: #e7e9ee;          /* card / surface */
-      --accent: #ff7d4e;           /* orange‑coral used on hashimedia.com hero */
+      --bg: #f2f4f8;
+      --surface: #e7e9ee;
+      --accent: #ff7d4e;
       --text: #1d1d1f;
-      --shadow-light: rgba(255,255,255,.7);
-      --shadow-dark: rgba(0,0,0,.12);
+      --shadow-light: rgba(255, 255, 255, 0.7);
+      --shadow-dark: rgba(0, 0, 0, 0.1);
     }
-
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
+      font-family: system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      align-items: center;
+      padding: 2rem;
     }
-
-    header {
-      max-width: 960px;
-      margin: 2rem auto 1rem;
-      padding: 1.5rem 2rem;
-      border-radius: 24px;
-      background: var(--surface);
-      /* neomorphic outer shadow */
-      box-shadow: 8px 8px 16px var(--shadow-dark),
-                  -8px -8px 16px var(--shadow-light);
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.6rem;
-      letter-spacing: -0.02em;
+    h1 {
       color: var(--accent);
+      margin-bottom: 1rem;
     }
-
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 0.95rem;
-      color: #5b5b5d;
-    }
-
-    main {
-      flex: 1;
-      width: 100%;
+    .filters {
       display: flex;
-      justify-content: center;
-      padding: 0 1rem 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
     }
-
-    .frame-wrap {
-      flex: 1;
-      max-width: 1200px;
-      height: 80vh;
-      border-radius: 24px;
-      overflow: hidden;
+    select {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 12px;
       background: var(--surface);
-      /* neomorphic inner shadow */
-      box-shadow: inset 6px 6px 12px var(--shadow-dark),
-                  inset -6px -6px 12px var(--shadow-light);
+      box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+      font-size: 1rem;
     }
-
-    iframe {
+    table {
+      border-collapse: collapse;
       width: 100%;
-      height: 100%;
-      border: 0;
+      max-width: 1200px;
+      background: var(--surface);
+      box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+      border-radius: 16px;
+      overflow: hidden;
     }
-
-    /* --- dark mode --- */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #121216;
-        --surface: #1c1d22;
-        --text: #f5f5f5;
-        --shadow-light: rgba(255,255,255,.04);
-        --shadow-dark: rgba(0,0,0,.5);
-      }
-      header p { color: #b3b3b7; }
+    th, td {
+      text-align: left;
+      padding: 1rem;
+      border-bottom: 1px solid #ccc;
+    }
+    th {
+      background: #dce1e9;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Creator Database</h1>
-    <p>Use the built‑in Notion filters to narrow by Category, Tier, or Channel</p>
-  </header>
+  <h1>Creator Database</h1>
+  <div class="filters">
+    <select id="tierFilter" onchange="filterTable()">
+      <option value="">All Tiers</option>
+    </select>
+    <select id="categoryFilter" onchange="filterTable()">
+      <option value="">All Categories</option>
+    </select>
+    <select id="channelFilter" onchange="filterTable()">
+      <option value="">All Channels</option>
+    </select>
+  </div>
+  <table id="creatorTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Tier</th>
+        <th>Channel</th>
+        <th>Followers</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 
-  <main>
-    <div class="frame-wrap">
-      <iframe src="https://hashimedia.notion.site/ebd/1f8383e9a54080dba389f17052c61c35?v=1f8383e9a54080158658000c911440df&embed" loading="lazy" allowfullscreen></iframe>
-    </div>
-  </main>
+  <script>
+    const data = [
+      { name: "闇の帝王、不敗の猛者", category: "コンピューターゲーム, スマホゲーム, 家庭用ゲーム（PlayStation、Switchなど）", tier: "", channel: "YouTube", url: "https://www.youtube.com/@%E9%97%87%E3%81%AE%E5...", followers: "" },
+      { name: "つばさチャンネル【雑談系ゲーム配信者】", category: "スマホゲーム, 配信（カテゴリー問わず）", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@TsubasaCH/videos", followers: "13,300" },
+      { name: "しょーとくsho-toku GAMES", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/results?search_query=sho-toku+GAMES", followers: "31,100" },
+      { name: "amano satoshi", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@amanosatoshi/featured", followers: "31,100" },
+      { name: "RUYLOG", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@RUYLOG", followers: "42,600" },
+    ];
+
+    function populateFilters() {
+      const tierSet = new Set();
+      const categorySet = new Set();
+      const channelSet = new Set();
+
+      data.forEach(item => {
+        if (item.tier) tierSet.add(item.tier);
+        if (item.category) categorySet.add(item.category);
+        if (item.channel) channelSet.add(item.channel);
+      });
+
+      for (const val of tierSet) addOption("tierFilter", val);
+      for (const val of categorySet) addOption("categoryFilter", val);
+      for (const val of channelSet) addOption("channelFilter", val);
+    }
+
+    function addOption(id, text) {
+      const opt = document.createElement("option");
+      opt.value = opt.textContent = text;
+      document.getElementById(id).appendChild(opt);
+    }
+
+    function renderTable() {
+      const tbody = document.querySelector("#creatorTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+          <td>${item.category}</td>
+          <td>${item.tier}</td>
+          <td>${item.channel}</td>
+          <td>${item.followers}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTable() {
+      const tier = document.getElementById("tierFilter").value;
+      const category = document.getElementById("categoryFilter").value;
+      const channel = document.getElementById("channelFilter").value;
+
+      const tbody = document.querySelector("#creatorTable tbody");
+      tbody.innerHTML = "";
+
+      data.forEach(item => {
+        if ((tier && item.tier !== tier) ||
+            (category && item.category !== category) ||
+            (channel && item.channel !== channel)) {
+          return;
+        }
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+          <td>${item.category}</td>
+          <td>${item.tier}</td>
+          <td>${item.channel}</td>
+          <td>${item.followers}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    populateFilters();
+    renderTable();
+  </script>
 </body>
 </html>
