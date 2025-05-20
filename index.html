@@ -23,53 +23,29 @@
       align-items: center;
       padding: 2rem;
     }
-    h1 {
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+    h1 { color: var(--accent); margin-bottom: 1rem; }
+    .filters { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
     select {
       padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 12px;
+      border: none; border-radius: 12px;
       background: var(--surface);
       box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
       font-size: 1rem;
     }
     table {
       border-collapse: collapse;
-      width: 100%;
-      max-width: 1200px;
+      width: 100%; max-width: 1200px;
       background: var(--surface);
       box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-      border-radius: 16px;
-      overflow: hidden;
+      border-radius: 16px; overflow: hidden;
     }
-    th, td {
-      text-align: left;
-      padding: 1rem;
-      border-bottom: 1px solid #ccc;
-    }
-    th {
-      background: #dce1e9;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    .blurred {
-      filter: blur(6px);
-      user-select: none;
-      pointer-events: none;
-    }
+    th, td { text-align: left; padding: 1rem; border-bottom: 1px solid #ccc; }
+    th { background:#dce1e9; }
+    tr:last-child td { border-bottom:none; }
+    a { color: var(--accent); text-decoration:none; }
+
+    /* name blur */
+    .blurred { filter: blur(6px); pointer-events:none; user-select:none; }
   </style>
 </head>
 <body>
@@ -77,72 +53,60 @@
   <div class="filters">
     <select id="tierFilter" onchange="filterTable()">
       <option value="">All Tiers</option>
-      <option>Low tier (<100000)</option>
-      <option>Grassroots (< 10000)</option>
-      <option>Mid tier (<500000)</option>
+      <option>Low tier (&lt;100000)</option>
+      <option>Grassroots (&lt; 10000)</option>
+      <option>Mid tier (&lt;500000)</option>
       <option>Top tier (500000+)</option>
     </select>
     <select id="categoryFilter" onchange="filterTable()">
       <option value="">All Categories</option>
-      <option>コンピューターゲーム</option>
-      <option>スマホゲーム</option>
-      <option>家庭用ゲーム（PlayStation、Switchなど）</option>
-      <option>配信（カテゴリー問わず）</option>
-      <option>ライフスタイル</option>
-      <option>旅行</option>
-      <option>ガジェットレビュー</option>
-      <option>在日外国人</option>
-      <option>Study</option>
-      <option>ファッション</option>
-      <option>メイク</option>
+      <option>コンピューターゲーム</option><option>スマホゲーム</option><option>家庭用ゲーム（PlayStation、Switchなど）</option><option>配信（カテゴリー問わず）</option><option>ライフスタイル</option><option>旅行</option><option>ガジェットレビュー</option><option>在日外国人</option><option>Study</option><option>ファッション</option><option>メイク</option>
     </select>
     <select id="channelFilter" onchange="filterTable()">
       <option value="">All Channels</option>
-      <option>YouTube</option>
-      <option>Instagram</option>
-      <option>TikTok</option>
-      <option>Twitch</option>
-      <option>X</option>
-      <option>Facebook</option>
+      <option>YouTube</option><option>Instagram</option><option>TikTok</option><option>Twitch</option><option>X</option><option>Facebook</option>
     </select>
   </div>
   <table id="creatorTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Category</th>
-        <th>Tier</th>
-        <th>Channel</th>
-        <th>Followers</th>
-      </tr>
-    </thead>
+    <thead><tr><th>Name</th><th>Category</th><th>Tier</th><th>Channel</th><th>Followers</th></tr></thead>
     <tbody></tbody>
   </table>
-  <script>
-    const data = [
-      { name: "闇の帝王、不敗の猛者", category: "コンピューターゲーム, スマホゲーム, 家庭用ゲーム（PlayStation、Switchなど）", tier: "", channel: "YouTube", url: "https://www.youtube.com/@%E9%97%87%E3%81%AE%E5...", followers: "" },
-      { name: "つばさチャンネル【雑談系ゲーム配信者】", category: "スマホゲーム, 配信（カテゴリー問わず）", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@TsubasaCH/videos", followers: "13,300" },
-      { name: "しょーとくsho-toku GAMES", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/results?search_query=sho-toku+GAMES", followers: "31,100" },
-      { name: "amano satoshi", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@amanosatoshi/featured", followers: "31,100" },
-      { name: "RUYLOG", category: "スマホゲーム", tier: "Low tier (<100000)", channel: "YouTube", url: "https://www.youtube.com/@RUYLOG", followers: "42,600" },
-    ];
+<script>
+  const data = [
+    { name:"闇の帝王、不敗の猛者", category:"コンピューターゲーム, スマホゲーム, 家庭用ゲーム（PlayStation、Switchなど）", tier:"", channel:"YouTube", url:"https://www.youtube.com/@xxx", followers:"" },
+    { name:"つばさチャンネル【雑談系ゲーム配信者】", category:"スマホゲーム, 配信（カテゴリー問わず）", tier:"Low tier (<100000)", channel:"YouTube", url:"https://www.youtube.com/@TsubasaCH/videos", followers:"13,300" },
+    { name:"しょーとくsho-toku GAMES", category:"スマホゲーム", tier:"Low tier (<100000)", channel:"YouTube", url:"https://www.youtube.com/results?search_query=sho-toku+GAMES", followers:"31,100" },
+    { name:"amano satoshi", category:"スマホゲーム", tier:"Low tier (<100000)", channel:"YouTube", url:"https://www.youtube.com/@amanosatoshi/featured", followers:"31,100" },
+    { name:"RUYLOG", category:"スマホゲーム", tier:"Low tier (<100000)", channel:"YouTube", url:"https://www.youtube.com/@RUYLOG", followers:"42,600" },
+  ];
 
-    function renderTable() {
-      const tbody = document.querySelector("#creatorTable tbody");
-      tbody.innerHTML = "";
-      data.forEach(item => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><span class="blurred"><a href="${item.url}" target="_blank">${item.name}</a></span></td>
-          <td>${item.category}</td>
-          <td>${item.tier}</td>
-          <td>${item.channel}</td>
-          <td>${item.followers}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+  function buildRow(item){
+    return `<tr>
+      <td class="blurred"><a href="${item.url}" tabindex="-1" aria-hidden="true">${item.name}</a></td>
+      <td>${item.category}</td>
+      <td>${item.tier}</td>
+      <td>${item.channel}</td>
+      <td>${item.followers}</td>
+    </tr>`;
+  }
 
-    function filterTable() {
-      const tier = document.getElementById("tierFilter").value;
-      const category = document.getElementById("categoryFilter").value;
+  function renderTable(list){
+    document.querySelector('#creatorTable tbody').innerHTML = list.map(buildRow).join('');
+  }
+
+  function filterTable(){
+    const tier = document.getElementById('tierFilter').value;
+    const cat  = document.getElementById('categoryFilter').value;
+    const ch   = document.getElementById('channelFilter').value;
+    const filtered = data.filter(i=>{
+      const catMatch = !cat || i.category.split(',').map(s=>s.trim()).includes(cat);
+      return (!tier||i.tier===tier)&&catMatch&&(!ch||i.channel===ch);
+    });
+    renderTable(filtered);
+  }
+
+  // initial render
+  renderTable(data);
+</script>
+</body>
+</html>
