@@ -65,6 +65,11 @@
       color: var(--accent);
       text-decoration: none;
     }
+    .blurred {
+      filter: blur(6px);
+      user-select: none;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -128,7 +133,7 @@
       data.forEach(item => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td><a href="${item.url}" target="_blank">${item.name}</a></td>
+          <td><span class="blurred"><a href="${item.url}" target="_blank">${item.name}</a></span></td>
           <td>${item.category}</td>
           <td>${item.tier}</td>
           <td>${item.channel}</td>
@@ -141,34 +146,3 @@
     function filterTable() {
       const tier = document.getElementById("tierFilter").value;
       const category = document.getElementById("categoryFilter").value;
-      const channel = document.getElementById("channelFilter").value;
-
-      const tbody = document.querySelector("#creatorTable tbody");
-      tbody.innerHTML = "";
-
-      data.forEach(item => {
-        const categories = item.category.split(",").map(c => c.trim());
-        const categoryMatch = !category || categories.includes(category);
-
-        if ((tier && item.tier !== tier) ||
-            !categoryMatch ||
-            (channel && item.channel !== channel)) {
-          return;
-        }
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><a href="${item.url}" target="_blank">${item.name}</a></td>
-          <td>${item.category}</td>
-          <td>${item.tier}</td>
-          <td>${item.channel}</td>
-          <td>${item.followers}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    renderTable();
-  </script>
-</body>
-</html>
